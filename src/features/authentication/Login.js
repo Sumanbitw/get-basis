@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import "../../assests/login.css";
-import { fetchUserEmail } from "./loginSlice";
+import { fetchUserEmail, resetData } from "./loginSlice";
 
 function Login() {
   const login = useSelector((state) => state.login);
@@ -13,10 +13,14 @@ function Login() {
   const [didMount, setDidMount] = useState(false);
 
   useEffect(() => {
-    setDidMount(true);
-    if(login.step === 1){
+    if(login.step !== 1){
+      dispatch(resetData())
       navigate("/")
     }
+  },[])
+
+  useEffect(() => {
+    setDidMount(true);
     return () => setDidMount(false);
   }, []);
 
@@ -32,6 +36,7 @@ function Login() {
   };
 
   const handleEnterClick = async (e) => {
+    console.log("clicked")
     e.preventDefault();
     let regex =
       /([a-zA-Z0-9]+)([\_\.\-{1}])?([a-zA-Z0-9]+)\@([a-zA-Z0-9]+)([\.])([a-zA-Z\.]+)/g;

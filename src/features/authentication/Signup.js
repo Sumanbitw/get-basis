@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postSignUpDetails } from "./loginSlice"
+import { postSignUpDetails, resetData } from "./loginSlice"
 import "../../assests/signup.css";
 import { useNavigate } from "react-router";
 
@@ -14,6 +14,13 @@ function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if(signup.step !== 3){
+      dispatch(resetData())
+      navigate("/")
+    }
+  },[])
+ 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
   };
@@ -51,6 +58,7 @@ function Signup() {
       await dispatch(postSignUpDetails(sendSignupDetails()))
     }catch(error){}  
   };
+
   console.log(agreeToPrivacy);
   return (
     <div className="form">

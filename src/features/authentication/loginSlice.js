@@ -9,7 +9,7 @@ export const fetchUserEmail = createAsyncThunk(
       { email: email }
     );
     console.log(response);
-    return {...response.data, email};
+    return { ...response.data, email };
   }
 );
 
@@ -19,7 +19,11 @@ export const verifyOtpAndToken = createAsyncThunk(
     console.log(values);
     const response = await axios.put(
       "https://hiring.getbasis.co/candidate/users/email/verify",
-      { email: values.email, token: values.token, verificationCode: values.verificationCode }
+      {
+        email: values.email,
+        token: values.token,
+        verificationCode: values.verificationCode,
+      }
     );
     console.log(response);
     return response.data;
@@ -41,28 +45,44 @@ export const postSignUpDetails = createAsyncThunk("/users", async (values) => {
       }
     );
     console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 });
+
+export const logoutUser = createAsyncThunk(
+  "/users/logout/id",
+  async (values) => {
+    console.log(values);
+    const response = await axios.delete(
+      `https://hiring.getbasis.co/candidate/users/logout/${values.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${values.id},${values.token}`,
+        },
+      }
+    );
+    console.log(response);
+  }
+);
+const InitialState = {
+  message: "",
+  success: null,
+  token: "",
+  isLogin: null,
+  users: null,
+  status: "idle",
+  error: null,
+  email: "",
+  step: 1,
+  userLoggedIn : false,
+  wrongEmailTokenCount: 1,
+}
 
 export const loginSlice = createSlice({
   name: "post",
-  initialState: {
-    message: "",
-    success: null,
-    token: "",
-    isLogin: null,
-    users: null,
-    status: "idle",
-    error: null,
-    email: "",
-    step: 1,
-    wrongEmailTokenCount: 0
-  },
+  initialState : InitialState,
   reducers: {
-    resetData :  (state) => {
-      state = state.initialState   
+    resetData: (state) => {
+      state = InitialState;
     },
   },
   extraReducers: {
@@ -76,15 +96,9 @@ export const loginSlice = createSlice({
       state.success = action.payload?.success;
       state.token = action.payload?.results?.token;
       state.isLogin = action.payload?.results?.isLogin;
+      state.userLoggedIn = true
       state.email = action.payload.email;
-      state.step = state.step + 1
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          isLogin: action.payload?.results?.isLogin,
-          token: action.payload?.results?.token,
-        })
-      );
+      state.step = 2;
     },
 
     [fetchUserEmail.rejected]: (state, action) => {
@@ -95,25 +109,46 @@ export const loginSlice = createSlice({
       state.status = "loading";
     },
     [verifyOtpAndToken.fulfilled]: (state, action) => {
-      console.log(action.payload.messageObj.wrongEmailTokenCount)
       state.isLogin = action.payload?.results?.isLogin;
       state.user = action.payload?.results?.user;
       state.success = action.payload?.success;
-      state.step = action.payload.results.isLogin ? 4 : 3
-      state.wrongEmailTokenCount = action.payload.messageObj.wrongEmailTokenCount<= 3 ? true : false
+      state.message = action.payload.message;
+      state.step = action.payload.results.isLogin ? 4 : 3;
+      state.wrongEmailTokenCount =
+        action.payload?.messageObj?.wrongEmailTokenCount < 3 ? true : false;
     },
     [verifyOtpAndToken.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.payload?.message;
     },
+    [postSignUpDetails.pending]: (state) => {
+      state.status = "loading";
+    },
+    [postSignUpDetails.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+      state.user = action.payload.results.user;
+      state.message = action.payload.message;
+      state.step = 4
+    },
+    [postSignUpDetails.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.payload.message;
+    },
+    [logoutUser.pending] : (state) => {
+      state.status = "loading"
+    },
+    [logoutUser.fulfilled] : (state,action) => {
+      state.status = "fulfilled"
+      state.message = action.payload?.message
+      state.success = action.payload?.success
+      state.user = action.payload?.results
+    },
+    [logoutUser.error] : (state, action) => {
+      state.error = "error"
+      state.error = action.payload.message
+    }
   },
 });
 
+export const { resetData } = loginSlice.actions
 export default loginSlice.reducer;
-
-// "firstName": "Mehul",
-//       "email": "mehul@gmail.com",
-//       "referredCodeKey": "",
-//       "agreeToPrivacyPolicy": true,
-//       "token": "",
-//       "source": "WEB_APP"
