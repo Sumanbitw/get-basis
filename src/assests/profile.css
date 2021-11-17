@@ -1,0 +1,16 @@
+.profile__container>span>img{
+  width: 50px;
+  height: 50px;
+}
+.profile__container{
+  display: flex;
+  border-bottom: 1px solid gray;
+}
+
+.profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
