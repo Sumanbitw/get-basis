@@ -1,0 +1,28 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login__container{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+.login__container > input{
+  padding: 0.6rem;
+  /* margin: 1rem; */
+  width: 100%;
+}
+
+.button{
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
