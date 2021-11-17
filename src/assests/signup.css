@@ -1,0 +1,30 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form__container{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 20rem;
+  border: 1px solid black;
+}
+
+.form__container>input{
+  margin: 1rem 0;
+  padding: 0.6rem;
+}
+
+.button{
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
