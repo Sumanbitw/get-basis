@@ -1,6 +1,9 @@
+This is a project which is used to create a simple React-Redux app for a User to Signin/Signup to an app and logout.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
-## Available Scripts
+## Installation
 
 In the project directory, you can run:
 
