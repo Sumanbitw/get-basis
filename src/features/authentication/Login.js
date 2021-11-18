@@ -36,7 +36,6 @@ function Login() {
   };
 
   const handleEnterClick = async (e) => {
-    console.log("clicked");
     e.preventDefault();
     let regex =
       /([a-zA-Z0-9]+)([\_\.\-{1}])?([a-zA-Z0-9]+)\@([a-zA-Z0-9]+)([\.])([a-zA-Z\.]+)/g;
