@@ -45,6 +45,7 @@ export const postSignUpDetails = createAsyncThunk("/users", async (values) => {
       }
     );
     console.log(response);
+    return response.data
   } catch (error) {}
 });
 
@@ -66,6 +67,7 @@ export const logoutUser = createAsyncThunk(
 const InitialState = {
   message: "",
   success: null,
+  userSignup: null,
   token: "",
   isLogin: null,
   users: null,
@@ -125,10 +127,15 @@ export const loginSlice = createSlice({
       state.status = "loading";
     },
     [postSignUpDetails.fulfilled]: (state, action) => {
+      console.log(state.success)
+      console.log(action.payload?.success)
       state.status = "fulfilled";
-      state.user = action.payload.results.user;
-      state.message = action.payload.message;
+      state.success = action.payload?.success ? true : false
+      state.user = action.payload?.results?.user;
+      state.message = action.payload?.message;
+      state.userSignup = action.payload?.success ? true : false
       state.step = 4
+      console.log(state.success)
     },
     [postSignUpDetails.rejected]: (state, action) => {
       state.status = "error";
