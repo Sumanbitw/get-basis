@@ -55,7 +55,9 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      await dispatch(postSignUpDetails(sendSignupDetails()))
+      if(firstName !== "" && email !== "" && agreeToPrivacy === true){
+        await dispatch(postSignUpDetails(sendSignupDetails()))
+      }     
     }catch(error){}  
   };
 
@@ -63,6 +65,7 @@ function Signup() {
   return (
     <div className="form">
       <form className="form__container" onSubmit={handleSubmit}>
+        <div className="signup__header"><h1>Sign up</h1></div>
         <input
           type="text"
           placeholder="Enter your first name"
@@ -81,13 +84,13 @@ function Signup() {
           id="input"
           onChange={handleReferralCodeKey}
         />
-        {!referral && <p>Please enter a valid code or else leave empty</p>}
-        {referral && <p>valid referral code</p>}
+        <div className="signup__error error">{!referral && <p>Please enter a valid code or else leave empty</p>}</div>
+        <div className="signup__error">{referral && <p>valid referral code</p>}</div>
         <label>
           <input type="checkbox" onClick={handleAgreeToPrivacy} />
           *Agree to privacy
         </label>
-        <input className="button" value="Sign up" type="submit"/>
+        <input className="button__signup" value="Sign up" type="submit"/>
       </form>
     </div>
   );
