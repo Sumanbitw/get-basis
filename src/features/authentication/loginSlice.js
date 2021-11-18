@@ -113,7 +113,7 @@ export const loginSlice = createSlice({
       state.user = action.payload?.results?.user;
       state.success = action.payload?.success;
       state.message = action.payload.message;
-      state.step = action.payload.results.isLogin ? 4 : 3;
+      state.step = action.payload?.results?.isLogin ? 4 : 3;
       state.wrongEmailTokenCount =
         action.payload?.messageObj?.wrongEmailTokenCount < 3 ? true : false;
     },
