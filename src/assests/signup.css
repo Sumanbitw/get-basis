@@ -10,13 +10,14 @@
   align-items: center;
   height: 100vh;
 }
-
+.signup__header{
+  font-size: medium;
+}
 .form__container{
   display: flex;
   flex-direction: column;
   padding: 1rem;
   width: 20rem;
-  border: 1px solid black;
 }
 
 .form__container>input{
@@ -24,7 +25,23 @@
   padding: 0.6rem;
 }
 
-.button{
+.signup__error{
+  
+  font-size: small;
+  display: block;
+}
+.error{
+  margin: 1rem 0;
+}
+.signup__error > p{
+  color: red;
+}
+
+.button__signup{
   padding: 0.5rem;
+  background-color: black;
+  color: whitesmoke;
+  border: 1px solid black;
+  width: 100px;
   margin: 1rem 0;
 }

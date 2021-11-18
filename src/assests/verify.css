@@ -9,20 +9,54 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  position: relative;
+}
+
+.verify__header{
+  margin: 1rem 0;
+  font-size: small;
 }
 
 .verify__container{
   display: flex;
   flex-wrap: wrap;
-  padding: 1rem;
-}
-.verify__container > input{
-  padding: 0.6rem;
-  /* margin: 1rem; */
-  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 760px;
+  width: 40%;
+  padding: 2rem;
+  position: relative;
 }
 
-.button{
-  padding: 0.5rem;
+.verify__input{
+  width: 80%;
   margin: 1rem 0;
+}
+.verify__input > input{
+  padding: 0.6rem;
+  width: 100%;
+}
+.verify__error{
+  margin: 1rem 0;
+  font-size: small;
+  display: block;
+}
+
+.verify__error > p{
+  color: red;
+}
+
+.arrow{
+  position: absolute;
+  top: 0;
+  left: 1.8rem;
+  width: 30px;
+  height: 30px;
+}
+.button__verify{
+  padding: 0.6rem;
+  background-color: black;
+  color: whitesmoke;
+  border: 1px solid black;
+  width: 100px;
 }
