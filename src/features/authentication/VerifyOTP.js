@@ -8,6 +8,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 function VerifyOTP() {
   const login = useSelector((state) => state.login);
   const [verifyOtp, setVerifyOtp] = useState("");
+  const [message, setMessage] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,7 +36,12 @@ function VerifyOTP() {
   const handleVerifyClick = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(verifyOtpAndToken(sendOtp()));
+      if(verifyOtp.length === 6){
+        await dispatch(verifyOtpAndToken(sendOtp()));
+      }else{
+        setMessage(true)
+      }
+      
       if (login.isLogin === false && verifyOtp === "112233") {
         navigate("/signup");
       } else if (login.isLogin === true && verifyOtp === "112233") {
@@ -45,7 +51,7 @@ function VerifyOTP() {
       }
     } catch (error) {}
   };
-  console.log(login?.wrongEmailTokenCount)
+
   return (
     <div className="verify">
       <div className="verify__container">
@@ -60,6 +66,7 @@ function VerifyOTP() {
           />
         </div>
         <div className="verify__error">
+          {message === true && <p>OTP should be of 6 letters</p>}
           {login?.success === false && <p>{login?.message}</p>}
         </div>
         <div className="button__container">
