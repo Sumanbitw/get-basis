@@ -13,11 +13,11 @@ function Login() {
   const [didMount, setDidMount] = useState(false);
 
   useEffect(() => {
-    if(login.step !== 1){
-      dispatch(resetData())
-      navigate("/")
+    if (login.step !== 1) {
+      dispatch(resetData());
+      navigate("/");
     }
-  },[])
+  }, []);
 
   useEffect(() => {
     setDidMount(true);
@@ -36,7 +36,7 @@ function Login() {
   };
 
   const handleEnterClick = async (e) => {
-    console.log("clicked")
+    console.log("clicked");
     e.preventDefault();
     let regex =
       /([a-zA-Z0-9]+)([\_\.\-{1}])?([a-zA-Z0-9]+)\@([a-zA-Z0-9]+)([\.])([a-zA-Z\.]+)/g;
@@ -55,16 +55,20 @@ function Login() {
   return (
     <div className="login">
       <div className="login__container">
+      <div className="login__header"><h1>Get Started!</h1></div>
+      <div className="login__input">
         <input
           id="email"
           type="email"
           placeholder="Enter your email"
           onChange={handleEmailChange}
-        />
-        {message && <p>Please enter a valid email address</p>}
-        <button className="button" onClick={handleEnterClick}>
+        /></div>
+        <div className="login__error">
+          {message && <p>Please enter a valid email address</p>}
+        </div>
+        <div><button className="button" onClick={handleEnterClick}>
           Enter
-        </button>
+        </button></div>
       </div>
     </div>
   );
