@@ -32,7 +32,6 @@ function Profile() {
     return { ...inputValues };
   }
 
-  console.log(login?.message);
   return (
     <div className="profile">
       {login?.success ? (
