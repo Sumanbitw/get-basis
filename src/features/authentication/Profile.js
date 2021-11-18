@@ -13,17 +13,17 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(login.step !== 4){
-      dispatch(resetData())
-      navigate("/")
+    if (login.step !== 4) {
+      dispatch(resetData());
+      navigate("/");
     }
-  },[])
+  }, []);
 
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
       await dispatch(logoutUser(sendTokenAndId()));
-      await dispatch(resetData())
+      await dispatch(resetData());
     } catch (error) {}
   };
 
@@ -31,8 +31,8 @@ function Profile() {
     let inputValues = { id: login?.user?._id, token: login?.user?.token };
     return { ...inputValues };
   }
-  
-  console.log(login?.message)
+
+  console.log(login?.message);
   return (
     <div className="profile">
       {login?.success ? (
@@ -43,7 +43,7 @@ function Profile() {
               <img src={waving} alt="" />
             </span>
           </div>
-          <div>
+          <div className="profile__details">
             <div>
               <HiOutlineMail /> {login?.user?.email}
             </div>
@@ -51,12 +51,13 @@ function Profile() {
               <HiPhone /> {login?.user?.phoneNumber}
             </div>
           </div>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout} className="btn button__logout">Logout</button>
         </>
       ) : (
         <>
-          <div style={{marginTop:"10rem"}}>Successfully logged out{login?.message}
-          <button onClick={() => navigate("/")}>Retry</button>
+          <div className="profile__success">
+            Successfully logged out
+            <button onClick={() => navigate("/")} className="btn button__retry">Retry</button>
           </div>
         </>
       )}
